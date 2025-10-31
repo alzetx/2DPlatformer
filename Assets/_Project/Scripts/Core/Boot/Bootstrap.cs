@@ -20,7 +20,7 @@ public class BootsTrap : MonoBehaviour
     {
         //services
         var loadingSteps = new List<LoadingStep>();
-        AudioService audioService = new();
+        AudioService audioService = new(); //test service
         LoadingStep audiostep = new(audioService.InitializeTask);
 
         loadingSteps.Add(audiostep);

@@ -37,6 +37,7 @@ public class SceneLoaderVisual : MonoBehaviour
     {
         Bind(true);
         AnimatePoints();
+        _root.SetActive(false);
     }
 
     private void AnimatePoints()

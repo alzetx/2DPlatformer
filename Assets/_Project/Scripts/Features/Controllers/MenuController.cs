@@ -42,7 +42,7 @@ public class MenuController : MonoBehaviour
     }
     private void OnClickStart()
     {
-        AudioService audioService = new();
+        AudioService audioService = new(); //todo test
         LoadingStep audiostep = new("first", audioService.InitializeTask);
         var loadingSteps = new List<LoadingStep>
             {
