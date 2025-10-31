@@ -43,6 +43,9 @@ namespace Zenject
         [SerializeField]
         List<string> _parentContractNames = new List<string>();
 
+        [SerializeField]
+        private MonoKernel _kernel;
+
         DiContainer _container;
 
         readonly List<SceneDecoratorContext> _decoratorContexts = new List<SceneDecoratorContext>();
@@ -324,8 +327,16 @@ namespace Zenject
 
             InstallSceneBindings(injectableMonoBehaviours);
 
-            _container.Bind(typeof(SceneKernel), typeof(MonoKernel))
+            //
+            if (_kernel == null)
+            {
+                _container.Bind(typeof(SceneKernel), typeof(MonoKernel))
                 .To<SceneKernel>().FromNewComponentOn(gameObject).AsSingle().NonLazy();
+            }
+            else
+            {
+                Container.Bind<MonoKernel>().FromInstance(_kernel).AsSingle().NonLazy();
+            }
 
             _container.Bind<ZenjectSceneLoader>().AsSingle();
 
