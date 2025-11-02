@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RawImage))]
 public class ImageScroller : MonoBehaviour
 {
-    [SerializeField, Min(0f)] private float _scrollSpeed;
+    [SerializeField] private float _scrollSpeed;
 
     [SerializeField] private float XDirection, YDirection;
 
