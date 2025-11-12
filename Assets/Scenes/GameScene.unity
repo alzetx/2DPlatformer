@@ -2693,7 +2693,7 @@ MonoBehaviour:
     _moveSpeed:
       value: 100
   _rotationComponent:
-    _transfrom: {fileID: 1749761148}
+    _transfrom: {fileID: 221823129}
     _facingRight:
       value: 1
     _enabled:
