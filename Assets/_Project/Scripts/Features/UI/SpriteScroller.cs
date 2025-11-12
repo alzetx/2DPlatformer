@@ -24,7 +24,4 @@ public class SpriteScroller : MonoBehaviour, IGameTickable
         _offset.x += _xSpeed * deltaTime;
         _mat.mainTextureOffset = _offset;
     }
-
-    
-
 }
