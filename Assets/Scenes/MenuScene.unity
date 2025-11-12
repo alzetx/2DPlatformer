@@ -445,6 +445,7 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+  _kernel: {fileID: 0}
 --- !u!4 &137331699
 Transform:
   m_ObjectHideFlags: 0
@@ -1595,6 +1596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextScene:
     _sceneAsset: {fileID: 102900000, guid: 0427b16e9e7f21b4a8639d8b8ba36e28, type: 3}
+    _sceneName: GameScene
   _ui: {fileID: 1413144375}
 --- !u!114 &1413144375
 MonoBehaviour:

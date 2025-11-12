@@ -1,18 +1,25 @@
-using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class SceneField
 {
-    [SerializeField] private UnityEngine.Object _sceneAsset;
+#if UNITY_EDITOR
+    [SerializeField] private UnityEditor.SceneAsset _sceneAsset;
+#endif
 
-    public string SceneName
+    [SerializeField] private string _sceneName;
+
+    [Button("Update SceneName")]
+    public void UpdateSceneName()
     {
-        get => _sceneAsset.name;
+        _sceneName = _sceneAsset.name;
     }
-    // makes it work with the existing Unity methods (LoadLevel/LoadScene)
+
+
+
     public static implicit operator string(SceneField sceneField)
     {
-        return sceneField.SceneName;
+        return sceneField._sceneName;
     }
 }

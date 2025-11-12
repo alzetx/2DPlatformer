@@ -304,6 +304,7 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+  _kernel: {fileID: 0}
 --- !u!4 &736344416
 Transform:
   m_ObjectHideFlags: 0
@@ -365,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextScene:
     _sceneAsset: {fileID: 102900000, guid: 9bef9360d8811c845882d884f6aa3306, type: 3}
+    _sceneName: MenuScene
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
