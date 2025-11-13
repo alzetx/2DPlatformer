@@ -1,70 +1,112 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader :  IDisposable
+public class SceneLoader
 {
     private const int DELAY_BEFORE_SCENE_ACTIVATION_MS = 2000;
-    private const int DELAY_AFTER_PROGRESS_COMPLETE_MS = 1000;
-    private ReactiveProperty<bool> _onLoaded = new(false);
-    private ReactiveProperty<float> _totalProgress = new(0f);
-    private ReactiveProperty<LoadingStep> _nextStep = new(default);
+    private const int DELAY_AFTER_PROGRESS_COMPLETE_MS = 3000;
+
+    private bool _isLoading;
+    private float _totalProgress;
     private AsyncOperation _asyncOperation;
-   
 
     public event Action OnStartLoading;
-    public IReactiveProperty<LoadingStep> NextStep => _nextStep;
-    public IReactiveProperty<float> TotalProgress => _totalProgress;
+    public event Action OnLoadingFinished;
+    public event Action<float> OnProgressChanged;
+    public event Action<LoadingStep> OnStepChanged;
 
-
-    
-    public IReactiveProperty<bool> OnLoaded => _onLoaded;
-
-    public void Dispose()
+    public async UniTask LoadSceneAsync(string targetScene, List<LoadingStep> customSteps = null)
     {
-        _onLoaded.Dispose();
-        _totalProgress.Dispose();
-        _nextStep.Dispose();
+        if (_isLoading)
+            return;
+
+        _isLoading = true;
+        OnStartLoading?.Invoke();
+
+        var currentScene = SceneManager.GetActiveScene();
+
+        var loaderScene = await LoadAdditiveScene(Names.SceneName.AdditiveScene);
+
+        await UnloadSceneSafe(currentScene);
+
+        await ExecuteLoadingSteps(targetScene, customSteps);
+
+        await ActivateAndFinalize(targetScene, loaderScene);
+
+        _isLoading = false;
+        OnLoadingFinished?.Invoke();
+    }
+    private async UniTask UnloadSceneSafe(Scene scene)
+    {
+        if (scene.isLoaded && scene.name != Names.SceneName.AdditiveScene)
+            await SceneManager.UnloadSceneAsync(scene);
     }
 
-
-    public async Task LoadSceneAsync(string sceneName, List<LoadingStep> qwe = null)
+    private async UniTask ExecuteLoadingSteps(string targetScene, List<LoadingStep> customSteps)
     {
-        _onLoaded.Value = false;
-        OnStartLoading?.Invoke();
-        var loadingSceneStep = new LoadingStep(description: "LoadingScene", actionAsync: async () => await LoadScene(sceneName));
-        List<LoadingStep> steps = (qwe);
-        steps.Add(loadingSceneStep);
+        var steps = new List<LoadingStep>();
+        if (customSteps != null)
+        {
+            steps.AddRange(customSteps);
+        }
 
-        var stepFraction = 1f / steps.Count;
-        _totalProgress.Value = 0;
+        var loadSceneStep = new LoadingStep("LoadingScene", async () => await LoadTargetScene(targetScene));
+        steps.Add(loadSceneStep);
+        
+        float stepFraction = 1f / steps.Count;
+        ChangeProgress(0);
 
         foreach (var step in steps)
         {
-            _nextStep.Value = step;
+            OnStepChanged?.Invoke(step);
             await step.ActionAsync();
-            _totalProgress.Value += stepFraction;
+            ChangeProgress(_totalProgress + stepFraction); 
         }
-        await Task.Delay(DELAY_AFTER_PROGRESS_COMPLETE_MS);
-        _onLoaded.Value = true;
-        _asyncOperation.allowSceneActivation = true;
+
+        await UniTask.Delay(DELAY_AFTER_PROGRESS_COMPLETE_MS);
     }
 
-    private async Task LoadScene(string sceneLoad)
+    private async UniTask<Scene> LoadAdditiveScene(string sceneName)
     {
-        _asyncOperation = SceneManager.LoadSceneAsync(sceneLoad);
+        await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        var scene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(scene);
+        await UniTask.Yield();
+        return scene;
+    }
+
+    private async UniTask LoadTargetScene(string sceneName)
+    {
+        _asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         _asyncOperation.allowSceneActivation = false;
+
 
         while (_asyncOperation.progress < 0.9f)
         {
-            await Task.Yield();
+            float sceneRelativeProgress = Mathf.InverseLerp(0f, 0.9f, _asyncOperation.progress);
+            await UniTask.Yield();
         }
-        await Task.Yield();
-        await Task.Delay(DELAY_BEFORE_SCENE_ACTIVATION_MS);
 
+        await UniTask.Delay(DELAY_BEFORE_SCENE_ACTIVATION_MS);
     }
 
+    private async UniTask ActivateAndFinalize(string targetScene, Scene loaderScene)
+    {
+        _asyncOperation.allowSceneActivation = true;
+        await UniTask.Yield();
+
+        var newScene = SceneManager.GetSceneByName(targetScene);
+        SceneManager.SetActiveScene(newScene);
+
+        await SceneManager.UnloadSceneAsync(loaderScene);
+    }
+
+    private void ChangeProgress(float value)
+    {
+        _totalProgress = Mathf.Clamp01(value);
+        OnProgressChanged?.Invoke(_totalProgress);
+    }
 }

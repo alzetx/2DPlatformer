@@ -18,9 +18,8 @@ public class BootsTrap : MonoBehaviour
 
     private async void Awake()
     {
-        //services
         var loadingSteps = new List<LoadingStep>();
-        AudioService audioService = new(); //test service
+        AudioService audioService = new(); //todo test service
         LoadingStep audiostep = new(audioService.InitializeTask);
 
         loadingSteps.Add(audiostep);

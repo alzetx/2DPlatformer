@@ -1,102 +1,109 @@
-using System;
-using System.Collections.Generic;
 using DG.Tweening;
+using System;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class SceneLoaderVisual : MonoBehaviour
+public class SceneLoaderVisual : MonoBehaviour, IInitializable, IDisposable
 {
+    [SerializeField] private GameObject _root;
+    [SerializeField] private Slider _slider;
+    [SerializeField] private TextMeshProUGUI _textDescription;
+    [SerializeField] private TextMeshProUGUI _textProgress;
+    [SerializeField] private float _animationDuration = 0.3f;
+    [SerializeField] private float _dotsInterval = 0.7f;
+
     private SceneLoader _loader;
-    private List<IDisposable> _disposables = new();
-    [SerializeField]
-    private TextMeshProUGUI _textDescription, _textProgress;
+    private Tweener _progressTween;
+    private Sequence _dotsSequence;
 
-    private float prevValue = 0;
-
-    [SerializeField]
-    private float _animationDuration;
-    private Tweener _tweener;
-    [SerializeField]
-    private Slider _slider;
-    [SerializeField]
-    private GameObject _root;
-    private Tween _dotsTween;
+    private float _prevValue;
     private string _baseText;
     private int _dotCount;
 
     [Inject]
-    private void Construct(SceneLoader model)
+    private void Construct(SceneLoader loader)
     {
-        _loader = model;
+        _loader = loader;
     }
-
-    private void OnEnable()
+    public void Initialize()
     {
         Bind(true);
-        AnimatePoints();
-        _root.SetActive(false);
+        _slider.value = 0f;
+        _textProgress.text = $"{Mathf.RoundToInt(0)}%";
     }
 
-    private void AnimatePoints()
-    {
-        _dotsTween = DOTween.Sequence()
-            .AppendCallback(() => 
-            {
-            _dotCount = (_dotCount % 3) + 1; _textDescription.text = _baseText + new string('.', _dotCount);  }) 
-            .AppendInterval(0.7f) 
-            .SetLoops(-1);
-            }
-
-    private void OnDisable()
+    public void Dispose()
     {
         Bind(false);
     }
-
     private void Bind(bool bind)
     {
         if (bind)
         {
-            IDisposable disposable = _loader.NextStep.Skip(1).Subscribe(OnStepChanged);
-            IDisposable disposable1 = _loader.TotalProgress.Subscribe(OnProgressChanged);
-            _loader.OnStartLoading += Show;
-            _disposables.Add(disposable);
-            _disposables.Add(disposable1);
+            _loader.OnStartLoading += OnStartLoading;
+            _loader.OnProgressChanged += OnProgressChanged;
+            _loader.OnStepChanged += OnStepChanged;
+            _loader.OnLoadingFinished += OnLoadingFinished;
         }
         else
         {
-            _loader.OnStartLoading -= Show;
-            _dotsTween?.Kill();
-            _tweener?.Kill();
-            foreach (var disposable in _disposables)
-            {
-                disposable?.Dispose();
-            }
+            _loader.OnStartLoading -= OnStartLoading;
+            _loader.OnProgressChanged -= OnProgressChanged;
+            _loader.OnStepChanged -= OnStepChanged;
+            _loader.OnLoadingFinished -= OnLoadingFinished;
+
+            _progressTween?.Kill();
+            _dotsSequence?.Kill();
         }
     }
 
-    private void Show()
+    private void OnStartLoading()
     {
         _root.SetActive(true);
+        AnimateDots();
+    }
+
+    private void OnLoadingFinished()
+    {
+        _root.SetActive(false);
+        _dotsSequence?.Kill();
     }
 
     private void OnProgressChanged(float newValue)
     {
-        _tweener?.Kill();
-        _tweener = DOVirtual.Float(prevValue, newValue, _animationDuration, value =>
+        _progressTween?.Kill();
+        Debug.Log(newValue);
+
+        _progressTween = DOVirtual.Float(_prevValue, newValue, _animationDuration, value =>
         {
-            _textProgress.text = Mathf.RoundToInt(value * 100).ToString() + "%";
             _slider.value = value;
+            _textProgress.text = $"{Mathf.RoundToInt(value * 100)}%";
         });
-        prevValue = newValue;
+
+        _prevValue = newValue;
     }
 
     private void OnStepChanged(LoadingStep step)
     {
         _baseText = step.Description;
+        _textDescription.text = _baseText;
     }
 
+    private void AnimateDots()
+    {
+        _dotsSequence?.Kill();
 
+        _dotsSequence = DOTween.Sequence()
+            .AppendCallback(() =>
+            {
+                _dotCount = (_dotCount % 3) + 1;
+                _textDescription.text = _baseText + new string('.', _dotCount);
+            })
+            .AppendInterval(_dotsInterval)
+            .SetLoops(-1);
+    }
+
+    
 }
