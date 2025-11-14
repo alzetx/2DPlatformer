@@ -1,9 +1,6 @@
-using DG.Tweening;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
-public class SpriteScroller : MonoBehaviour, IGameTickable
+public class SpriteScroller : MonoBehaviour
 {
     [SerializeField] 
     private SpriteRenderer _spriteRenderer;
@@ -18,10 +15,10 @@ public class SpriteScroller : MonoBehaviour, IGameTickable
         _spriteRenderer.material = _mat;
         _offset = _mat.mainTextureOffset;
     }
-
-    public void Tick(float deltaTime)
+    private void Update()
     {
-        _offset.x += _xSpeed * deltaTime;
+        _offset.x += _xSpeed * Time.deltaTime;
         _mat.mainTextureOffset = _offset;
     }
+
 }

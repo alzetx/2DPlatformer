@@ -26,7 +26,7 @@ public class JumpComponent
 
     [Space, Title("Dynamic state")]
     [ShowInInspector, ReadOnly, HideInEditorMode]
-    private AtomicVariable<LinkedList<GameObject>> _obstacles = new(new LinkedList<GameObject>());
+    private AtomicVariable<int> _contactsObstacles = new(0);
     [SerializeField]
     private AtomicVariable<bool> _isGrounded;
     [ShowInInspector, ReadOnly]
@@ -44,7 +44,7 @@ public class JumpComponent
     public void Initialize()
     {
         //condition
-        _groundMechanics = new(_obstacles, _isGrounded, _groundCollider, _interactionMasks);
+        _groundMechanics = new(_contactsObstacles, _isGrounded, _groundCollider, _interactionMasks);
         _canJump.Compose(() => _enabled.Value && _isGrounded.Value);
 
         //jump

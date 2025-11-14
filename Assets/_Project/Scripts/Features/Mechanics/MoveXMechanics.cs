@@ -1,7 +1,7 @@
 using Atomic.Elements;
 using UnityEngine;
 
-public class MoveXMechanics
+public class MoveXMechanics : IGameFixedTickable
 {
     private readonly IAtomicValue<bool> _canMove;
     private readonly IAtomicValue<float> _moveDirection;
@@ -19,7 +19,7 @@ public class MoveXMechanics
         _isMove = isMove;
     }
 
-    public void FixedUpdate(float deltaTime)
+    public void FixedTick(float deltaTime)
     {
         if (_canMove.Value)
         {
@@ -27,4 +27,5 @@ public class MoveXMechanics
             _rigidbody.linearVelocity = new Vector2((_moveDirection.Value * _moveSpeed.Value) * deltaTime, _rigidbody.linearVelocity.y);
         }
     }
+
 }

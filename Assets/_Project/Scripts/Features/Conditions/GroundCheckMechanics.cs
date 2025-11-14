@@ -1,24 +1,26 @@
 using Atomic.Elements;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-[Serializable]
 public class GroundCheckMechanics
 {
     private IAtomicVariable<bool> _isGrounded;
-    private IAtomicVariable<LinkedList<GameObject>> _obstacles;
+    private IAtomicVariable<int> _contactObstacles;
     private TriggerColliderDispatcher _colliderDispatcher;
     private LayerMask[] _masks;
 
-    public GroundCheckMechanics(IAtomicVariable<LinkedList<GameObject>> obstacles, IAtomicVariable<bool> isGrounded, TriggerColliderDispatcher colliderDispatcher, params LayerMask[] masks)
+    public GroundCheckMechanics(
+        IAtomicVariable<int> contactObstacles,
+        IAtomicVariable<bool> isGrounded,
+        TriggerColliderDispatcher colliderDispatcher,
+        params LayerMask[] masks)
     {
-        _obstacles = obstacles;
+        _contactObstacles = contactObstacles;
         _isGrounded = isGrounded;
         _colliderDispatcher = colliderDispatcher;
         _masks = masks;
     }
+
     public void Enable()
     {
         _colliderDispatcher.TriggerEnteredEvent += OnTriggerEnter;
@@ -35,19 +37,18 @@ public class GroundCheckMechanics
     {
         if (IsInLayerMask(collider))
         {
-            _obstacles.Value.AddLast(collider.gameObject);
+            _contactObstacles.Value++;
             OnObstaclesChanged();
         }
     }
 
     private void OnTriggerExit(Collider2D collider)
     {
-        if (IsInLayerMask(collider) && _obstacles.Value.Contains(collider.gameObject)) //todo optimize?
+        if (IsInLayerMask(collider))
         {
-            _obstacles.Value.Remove(collider.gameObject);
+            _contactObstacles.Value = Math.Min(0, _contactObstacles.Value--);
             OnObstaclesChanged();
         }
-
     }
 
     private bool IsInLayerMask(Collider2D collider)
@@ -63,7 +64,6 @@ public class GroundCheckMechanics
 
     private void OnObstaclesChanged()
     {
-        _isGrounded.Value = _obstacles.Value.Count > 0 ? true : false;
+        _isGrounded.Value = _contactObstacles.Value > 0;
     }
-
 }

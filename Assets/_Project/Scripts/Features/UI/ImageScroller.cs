@@ -9,10 +9,10 @@ public class ImageScroller : MonoBehaviour
     private float _scrollSpeed;
 
     [SerializeField]
-    private float XDirection;
+    private float _xDirection;
 
     [SerializeField]
-    private float YDirection;
+    private float _yDirection;
 
     [SerializeField]
     private RawImage _rawImage;
@@ -22,7 +22,7 @@ public class ImageScroller : MonoBehaviour
 
     private void Awake()
     {
-        _direction = new Vector2(XDirection, YDirection).normalized * _scrollSpeed;
+        _direction = new Vector2(_xDirection, _yDirection).normalized * _scrollSpeed;
         StartScrolling();
     }
 

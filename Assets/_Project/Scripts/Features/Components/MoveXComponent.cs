@@ -1,5 +1,4 @@
 using Atomic.Elements;
-using Atomic.Objects;
 using System;
 using UnityEngine;
 
@@ -32,7 +31,7 @@ public class MoveXComponent
 
     public void FixedTick(float deltaTime)
     {
-        _moveXMechanics.FixedUpdate(deltaTime);
+        _moveXMechanics.FixedTick(deltaTime);
     }
 
     public void Dispose()

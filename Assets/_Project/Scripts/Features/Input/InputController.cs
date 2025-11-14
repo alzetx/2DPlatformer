@@ -51,6 +51,7 @@ public class InputControllers : IInitializable, IGameStartListener, IGameTickabl
         {
             _input.Character.Movement.performed -= OnMove;
             _input.Character.Movement.canceled -= OnMove;
+            _input.Character.Jump.performed -= OnJump;
             _input.Character.Disable();
         }
     }
