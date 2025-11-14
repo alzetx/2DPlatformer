@@ -5,6 +5,7 @@ public static class Names
     public static class Variable
     {
         public const string XMoveDirection = nameof(XMoveDirection);
+        public const string Health = nameof(Health);
     }
 
     public static class Actions

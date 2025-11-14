@@ -5,6 +5,8 @@ public class UIInstaller : MonoInstaller
 {
     [SerializeField]
     private StartScreen _startScreen;
+    [SerializeField]
+    private HealthView _healthView;
 
     public override void InstallBindings()
     {

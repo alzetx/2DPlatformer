@@ -11,7 +11,6 @@ public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, I
     private CharacterView _view;
     public void OnStartGame()
     {
-        Compose();
         _core.OnStartGame();
         _view.OnStartGame(_core);
         Enable();

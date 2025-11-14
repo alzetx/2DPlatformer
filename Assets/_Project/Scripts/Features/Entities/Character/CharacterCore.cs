@@ -6,9 +6,11 @@ using UnityEngine;
 public class CharacterCore
 {
     [Section]
-    public MoveXComponent MoveComponent;
+    public MoveXComponent moveComponent;
     [Section]
-    public JumpComponent JumpComponent;
+    public JumpComponent jumpComponent;
+    [Section]
+    public HealthComponent healthComponent;
 
     [SerializeField]
     private RotationComponent _rotationComponent;
@@ -16,30 +18,34 @@ public class CharacterCore
 
     public void OnStartGame()
     {
-        MoveComponent.Initialize();
-        _rotationComponent.Initialize(MoveComponent.xDirection);
-        JumpComponent.Initialize();
-        JumpComponent.Enable();
+        moveComponent.Initialize();
+        _rotationComponent.Initialize(moveComponent.xDirection);
+        jumpComponent.Initialize();
+        healthComponent.Initialize();
+        jumpComponent.Enable();
     }
 
     public void OnEnable()
     {
-        JumpComponent.Enable();
+        jumpComponent.Enable();
+        healthComponent.Enable();
     }
 
     public void OnDisable()
     {
-        JumpComponent.Disable();
+        jumpComponent.Disable();
+        healthComponent.Disable();
     }
 
     public void FixedTick(float deltaTime)
     {
-        MoveComponent.FixedTick(deltaTime);
+        moveComponent.FixedTick(deltaTime);
     }
 
     public void OnDestroy()
     {
-        MoveComponent.Dispose();
-        JumpComponent.Disable();
+        OnDisable();
+        moveComponent.Dispose();
+        healthComponent.Dispose();
     }
 }
