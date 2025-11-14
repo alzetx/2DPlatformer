@@ -1,4 +1,5 @@
 using Atomic.Elements;
+using Atomic.Objects;
 using System;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ using UnityEngine;
 public class MoveXComponent
 {
     [SerializeField]
+    [Get(Names.Variable.XMoveDirection)]
     public AtomicVariable<float> xDirection;
     [SerializeField]
     private Rigidbody2D _rigidbody;
@@ -15,12 +17,13 @@ public class MoveXComponent
     private AtomicVariable<bool> _isMoving;
     [SerializeField]
     private AtomicVariable<float> _moveSpeed;
-
+    [SerializeField]
 
 
     private MoveXMechanics _moveXMechanics;
 
     public IAtomicValue<bool> CanMove => _enabled;
+    public IAtomicObservable<bool> IsMoving => _isMoving;
     public Rigidbody2D Rigidbody2D => _rigidbody;
 
 

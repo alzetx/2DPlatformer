@@ -1,9 +1,8 @@
 using System;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class InputControllers : IInitializable, IGameStartListener, IGameTickable, IGamePauseListener, IGameResumeListener, IDisposable, IInput
+public class InputProvider : IInitializable, IGameStartListener, IGamePauseListener, IGameResumeListener, IDisposable, IInput
 {
     private Controls _input;
     private float _moveDirection;
@@ -15,11 +14,6 @@ public class InputControllers : IInitializable, IGameStartListener, IGameTickabl
     public void OnStartGame()
     {
         Bind(true);
-    }
-
-    void IGameTickable.Tick(float deltaTime)
-    {
-        
     }
 
     void IGamePauseListener.OnPauseGame()
