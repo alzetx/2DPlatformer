@@ -1,7 +1,7 @@
 using Atomic.Objects;
 using UnityEngine;
 
-public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, IGamePauseListener, IGameResumeListener
+public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, IGamePauseListener, IGameResumeListener, IGameTickable
 {
     [SerializeField]
     [Section]
@@ -17,21 +17,26 @@ public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, I
         Enable();
     }
 
-    public void FixedTick(float deltaTime)
+    void IGameFixedTickable.FixedTick(float deltaTime)
     {
         _core.FixedTick(deltaTime);
     }
+    void IGameTickable.Tick(float deltaTime)
+    {
+        _view.Tick(deltaTime);
+    }
+
     private void OnDestroy()
     {
         _core.OnDestroy();
     }
 
-    public void OnPauseGame()
+    void IGamePauseListener.OnPauseGame()
     {
         Disable();
     }
 
-    public void OnResumeGame()
+    void IGameResumeListener.OnResumeGame()
     {
         Enable();
     }
@@ -47,4 +52,6 @@ public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, I
         _core.OnDisable();
         _view.OnDisable();
     }
+
+    
 }

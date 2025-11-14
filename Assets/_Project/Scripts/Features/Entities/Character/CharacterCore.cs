@@ -6,38 +6,40 @@ using UnityEngine;
 public class CharacterCore
 {
     [Section]
-    public MoveXComponent _moveComponent;
+    public MoveXComponent MoveComponent;
+    [Section]
+    public JumpComponent JumpComponent;
+
     [SerializeField]
     private RotationComponent _rotationComponent;
-    [SerializeField]
-    private JumpComponent _jumpComponent;
+
 
     public void OnStartGame()
     {
-        _moveComponent.Initialize();
-        _rotationComponent.Initialize(_moveComponent.xDirection);
-        _jumpComponent.Initialize();
-        _jumpComponent.Enable();
+        MoveComponent.Initialize();
+        _rotationComponent.Initialize(MoveComponent.xDirection);
+        JumpComponent.Initialize();
+        JumpComponent.Enable();
     }
 
     public void OnEnable()
     {
-        _jumpComponent.Enable();
+        JumpComponent.Enable();
     }
 
     public void OnDisable()
     {
-        _jumpComponent.Disable();
+        JumpComponent.Disable();
     }
 
     public void FixedTick(float deltaTime)
     {
-        _moveComponent.FixedTick(deltaTime);
+        MoveComponent.FixedTick(deltaTime);
     }
 
     public void OnDestroy()
     {
-        _moveComponent.Dispose();
-        _jumpComponent.Disable();
+        MoveComponent.Dispose();
+        JumpComponent.Disable();
     }
 }

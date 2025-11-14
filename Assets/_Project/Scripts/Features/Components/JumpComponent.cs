@@ -1,4 +1,5 @@
 using Atomic.Elements;
+using Atomic.Objects;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,14 @@ public class JumpComponent
     [ShowInInspector, ReadOnly]
     private AtomicFunction<bool> _canJump = new();
     public AtomicEvent onJump = new();
-    public IAtomicObservable<bool> IsGrounded => _isGrounded;
+    public IAtomicObservable<bool> IsGroundedObservable => _isGrounded;
+    public IAtomicValue<bool> IsGrounded => _isGrounded;
     public IAtomicAction Jump => _jumpAction;
     public IAtomicValue<bool> CanJump => _canJump;
+    public Rigidbody2D Rigidbody => _rigidbody;
 
-    [ShowInInspector]
+    [SerializeField]
+    [Get(Names.Actions.Jump)]
     private JumpAction _jumpAction;
     private GroundCheckMechanics _groundMechanics;
     private AddForceRigidBodyAction _addForceAction;
@@ -49,7 +53,7 @@ public class JumpComponent
 
         //jump
         _addForceAction = new(_rigidbody, _force, _impactForce);
-        _jumpAction = new(_canJump, _addForceAction, onJump);
+        _jumpAction.Initialize(_canJump, _addForceAction, onJump);
     }
 
     public void Enable()

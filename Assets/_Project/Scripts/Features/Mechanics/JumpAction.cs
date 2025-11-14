@@ -9,7 +9,7 @@ public class JumpAction : IAtomicAction
     private IAtomicAction _addForceJumpAction;
     private IAtomicEvent _onJump;
 
-    public JumpAction(IAtomicValue<bool> condition, IAtomicAction addForceJumpAction, IAtomicEvent onJump)
+    public void Initialize(IAtomicValue<bool> condition, IAtomicAction addForceJumpAction, IAtomicEvent onJump)
     {
         _condition = condition;
         _addForceJumpAction = addForceJumpAction;
