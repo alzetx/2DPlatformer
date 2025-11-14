@@ -57,7 +57,7 @@ public class JumpComponent
         _groundMechanics.Enable();
     }
 
-    public void Dispose()
+    public void Disable()
     {
         _groundMechanics.Dispose();
         _isGrounded.Dispose();
