@@ -37,7 +37,7 @@ public class MoveXController
 
     private IAtomicVariable<float> GetMoveDirection()
     {
-        var direction = _character.GetVariable<float>(Names.Variable.XMoveDirection);
+        var direction = _character.GetVariable<float>(GameConstants.Variables.XMoveDirection);
         return direction ?? default;
     }
 }
@@ -76,7 +76,7 @@ public class JumpController
 
     private IAtomicAction GetJumpAction()
     {
-        var jumpAction = _character.GetAction(Names.Actions.Jump);
+        var jumpAction = _character.GetAction(GameConstants.Actions.Jump);
         if (jumpAction != null)
         {
             return jumpAction;

@@ -11,5 +11,6 @@ public class UIInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInterfacesTo<StartScreen>().FromInstance(_startScreen);
+        Container.BindInstance(_healthView).AsSingle();
     }
 }

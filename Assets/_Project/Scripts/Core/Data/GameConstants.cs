@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-public static class Names
+public static class GameConstants
 {
-    public static class Variable
+    public static class Variables
     {
         public const string XMoveDirection = nameof(XMoveDirection);
         public const string Health = nameof(Health);
@@ -13,12 +13,12 @@ public static class Names
         public const string Jump = nameof(Jump);
     }
 
-    public static class SceneName
+    public static class SceneNames
     {
         public const string AdditiveScene = nameof(AdditiveScene);
     }
 
-    public static class Animator
+    public static class AnimatorKeys
     {
         public const string Moving = nameof(Moving);
         public const string YVelocity = nameof(YVelocity);

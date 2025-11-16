@@ -7,6 +7,7 @@ public class BootsTrap : MonoBehaviour
 {
     [SerializeField]
     private SceneField _nextScene;
+
     private SceneLoader _sceneLoader;
 
     [Inject]
@@ -19,7 +20,7 @@ public class BootsTrap : MonoBehaviour
     private async void Awake()
     {
         var loadingSteps = new List<LoadingStep>();
-        AudioService audioService = new(); //todo test service
+        AudioService audioService = new(); 
         LoadingStep audiostep = new(audioService.InitializeTask);
 
         loadingSteps.Add(audiostep);

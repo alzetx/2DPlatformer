@@ -7,15 +7,14 @@ public class FacingRightCondition : IAtomicFunction<bool>
 {
     private readonly Transform _transform;
     private readonly IAtomicVariable<bool> _facingRight;
-    public bool FacingRight => _transform.eulerAngles.y == _rightYEuler;
-    private readonly float _rightYEuler = 0f;
 
-    public FacingRightCondition(Transform transform, IAtomicVariable<bool> facingRight, float rightYEuler)
+    public FacingRightCondition(Transform transform, IAtomicVariable<bool> facingRight)
     {
         _transform = transform;
         _facingRight = facingRight;
-        _rightYEuler = rightYEuler;
     }
+
+    private bool FacingRight => _transform.localScale.x > 0f;
 
     public bool Invoke()
     {

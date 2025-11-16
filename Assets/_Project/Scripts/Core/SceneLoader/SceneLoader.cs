@@ -28,7 +28,7 @@ public class SceneLoader
 
         var currentScene = SceneManager.GetActiveScene();
 
-        var loaderScene = await LoadAdditiveScene(Names.SceneName.AdditiveScene);
+        var loaderScene = await LoadAdditiveScene(GameConstants.SceneNames.AdditiveScene);
 
         await UnloadSceneSafe(currentScene);
 
@@ -41,7 +41,7 @@ public class SceneLoader
     }
     private async UniTask UnloadSceneSafe(Scene scene)
     {
-        if (scene.isLoaded && scene.name != Names.SceneName.AdditiveScene)
+        if (scene.isLoaded && scene.name != GameConstants.SceneNames.AdditiveScene)
             await SceneManager.UnloadSceneAsync(scene);
     }
 

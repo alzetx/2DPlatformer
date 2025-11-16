@@ -2,7 +2,6 @@ using Atomic.Elements;
 using Atomic.Objects;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -40,7 +39,7 @@ public class JumpComponent
     public Rigidbody2D Rigidbody => _rigidbody;
 
     [SerializeField]
-    [Get(Names.Actions.Jump)]
+    [Get(GameConstants.Actions.Jump)]
     private JumpAction _jumpAction;
     private GroundCheckMechanics _groundMechanics;
     private AddForceRigidBodyAction _addForceAction;

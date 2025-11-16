@@ -23,6 +23,6 @@ public class JumpAnimator
     }
     private void OnJump()
     {
-        _animator.SetTrigger(Names.Animator.Jump);
+        _animator.SetTrigger(GameConstants.AnimatorKeys.Jump);
     }
 }

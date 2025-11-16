@@ -46,7 +46,7 @@ public class GroundCheckMechanics
     {
         if (IsInLayerMask(collider))
         {
-            _contactObstacles.Value = Math.Min(0, _contactObstacles.Value--);
+            _contactObstacles.Value = Math.Max(0, _contactObstacles.Value - 1);
             OnObstaclesChanged();
         }
     }

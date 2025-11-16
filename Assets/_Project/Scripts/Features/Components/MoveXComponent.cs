@@ -7,7 +7,7 @@ using UnityEngine;
 public class MoveXComponent
 {
     [SerializeField]
-    [Get(Names.Variable.XMoveDirection)]
+    [Get(GameConstants.Variables.XMoveDirection)]
     public AtomicVariable<float> xDirection;
     [SerializeField]
     private Rigidbody2D _rigidbody;

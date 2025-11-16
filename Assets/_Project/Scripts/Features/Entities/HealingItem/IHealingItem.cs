@@ -1,7 +1,7 @@
 using Atomic.Elements;
 using Atomic.Objects;
 
-[Is("Pickable", "Healing")] //todo вынести 
+[Is("Pickable", "Healing")] //todo РІС‹РЅРµСЃС‚Рё 
 public interface IHealingItem : IAtomicObject
 {
     IAtomicValue<int> HealingPoints { get; }

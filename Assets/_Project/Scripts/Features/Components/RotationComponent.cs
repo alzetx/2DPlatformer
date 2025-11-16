@@ -6,8 +6,6 @@ using UnityEngine;
 [Serializable]
 public class RotationComponent
 {
-    private const float RIGHT_Y_EULER = 0f;
-    private const float LEFT_Y_EULER = 180f;
     [SerializeField]
     private Transform _transfrom;
     [SerializeField]
@@ -21,8 +19,8 @@ public class RotationComponent
 
     public void Initialize(IAtomicObservable<float> moveXDirectionObservable)
     {
-        _facingRightCondition = new(_transfrom, _facingRight, RIGHT_Y_EULER);
-        _rotationMechanics = new(_enabled, moveXDirectionObservable, _transfrom, _facingRightCondition, RIGHT_Y_EULER, LEFT_Y_EULER);
+        _facingRightCondition = new(_transfrom, _facingRight);
+        _rotationMechanics = new(_enabled, moveXDirectionObservable, _transfrom, _facingRightCondition);
         _rotationMechanics.Initialize();
     }
 

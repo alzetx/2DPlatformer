@@ -1,6 +1,4 @@
-using Atomic.Objects;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using Zenject;
 
 public class CharacterInstaller : MonoInstaller

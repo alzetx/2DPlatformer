@@ -6,7 +6,6 @@ public class CharacterView
 {
     [SerializeField]
     private Animator _animator;
-    [SerializeField]
     private HealthView _healthView;
 
     private MoveAnimator _moveAnimator;
@@ -14,12 +13,17 @@ public class CharacterView
     private JumpAnimator _jumpAnimator;
 
     private HealthPresenter _healthPresenter;
+    public void Construct(HealthView healthView)
+    {
+        _healthView = healthView;
+    }
     public void OnStartGame(CharacterCore core)
     {
         _moveAnimator = new(_animator, core.moveComponent.IsMoving);
         _airAnimator = new(_animator, core.jumpComponent.IsGroundedObservable, core.jumpComponent.IsGrounded.Value, core.jumpComponent.Rigidbody);
         _jumpAnimator = new(_animator, core.jumpComponent.onJump);
         _healthPresenter = new(_healthView, core.healthComponent.HealthData);
+        _healthPresenter.Initialize();
     }
     public void OnEnable()
     {

@@ -24,6 +24,6 @@ public class MoveAnimator
 
     private void OnMove(bool onMove)
     {
-        _animator.SetBool(Names.Animator.Moving, onMove);
+        _animator.SetBool(GameConstants.AnimatorKeys.Moving, onMove);
     }
 }

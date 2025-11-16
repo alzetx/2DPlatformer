@@ -11,7 +11,11 @@ public class HealthPresenter
         _view = view;
         _health = health;
     }
-
+    public void Initialize()
+    {
+        _view.SetMaxValue(_health.maxHP);
+        _view.SetCurrentValue(_health.currentHP);
+    }
     public void Enable()
     {
         Bind(true);

@@ -1,14 +1,19 @@
 using Atomic.Objects;
 using UnityEngine;
+using Zenject;
 
 public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, IGamePauseListener, IGameResumeListener, IGameTickable
 {
-    [SerializeField]
-    [Section]
+    [SerializeField, Section]
     private CharacterCore _core;
-    [SerializeField]
-    [Section]
+    [SerializeField, Section]
     private CharacterView _view;
+
+    [Inject]
+    private void Construct(HealthView view)
+    {
+        _view.Construct(view);
+    }
     public void OnStartGame()
     {
         _core.OnStartGame();

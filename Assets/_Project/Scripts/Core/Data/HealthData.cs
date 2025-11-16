@@ -6,20 +6,35 @@ public class HealthData
 {
     public int maxHP;
     public int currentHP;
+
     public bool IsHealthFull => currentHP >= maxHP;
+
     public event Action<int> OnHealthChanged;
+    public event Action OnDeathEvent;
+
+    private void SetHealth(int newValue)
+    {
+        newValue = Math.Clamp(newValue, 0, maxHP);
+
+        if (currentHP == newValue)
+            return;
+
+        currentHP = newValue;
+        OnHealthChanged?.Invoke(currentHP);
+
+        if (currentHP == 0)
+            OnDeathEvent?.Invoke();
+    }
 
     [Button]
     public void SetDamage(int damage)
     {
-        currentHP = Math.Max(0, currentHP - damage);
-        OnHealthChanged?.Invoke(currentHP);
+        SetHealth(currentHP - damage);
     }
 
     [Button]
     public void RestoreHealth(int value)
     {
-        currentHP = Math.Min(maxHP, currentHP + value);
-        OnHealthChanged?.Invoke(currentHP);
+        SetHealth(currentHP + value);
     }
 }

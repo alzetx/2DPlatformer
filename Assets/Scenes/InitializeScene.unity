@@ -365,8 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextScene:
-    _sceneAsset: {fileID: 102900000, guid: 9bef9360d8811c845882d884f6aa3306, type: 3}
-    _sceneName: MenuScene
+    _sceneGuid: 8c9cfa26abfee488c85f1582747f6a02
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -25,13 +25,13 @@ public class AirAnimator
     {
         if (_onGround)
             return;
-        _animator.SetFloat(Names.Animator.YVelocity, _rigidbody.linearVelocityY);
+        _animator.SetFloat(GameConstants.AnimatorKeys.YVelocity, _rigidbody.linearVelocityY);
     }
 
     private void OnGround(bool onGround)
     {
         _onGround = onGround;
-        _animator.SetBool(Names.Animator.IsGrounded, _onGround);
+        _animator.SetBool(GameConstants.AnimatorKeys.IsGrounded, _onGround);
     }
 
     public void Disable()
