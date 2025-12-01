@@ -11,6 +11,7 @@ public class CharacterView
     private MoveAnimator _moveAnimator;
     private AirAnimator _airAnimator;
     private JumpAnimator _jumpAnimator;
+    private DeathAnimator _deathAnimator;
 
     private HealthPresenter _healthPresenter;
     public void Construct(HealthView healthView)
@@ -19,6 +20,7 @@ public class CharacterView
     }
     public void OnStartGame(CharacterCore core)
     {
+        _deathAnimator = new(_animator, core.healthComponent.HealthData);
         _moveAnimator = new(_animator, core.moveComponent.IsMoving);
         _airAnimator = new(_animator, core.jumpComponent.IsGroundedObservable, core.jumpComponent.IsGrounded.Value, core.jumpComponent.Rigidbody);
         _jumpAnimator = new(_animator, core.jumpComponent.onJump);
@@ -43,6 +45,7 @@ public class CharacterView
     {
         if (bind)
         {
+            _deathAnimator.Enable();
             _moveAnimator.Enable();
             _airAnimator.Enable();
             _jumpAnimator.Enable();
@@ -50,6 +53,7 @@ public class CharacterView
         }
         else
         {
+            _deathAnimator.Disable();
             _moveAnimator.Disable();
             _airAnimator.Disable();
             _jumpAnimator.Disable();

@@ -24,5 +24,6 @@ public static class GameConstants
         public const string YVelocity = nameof(YVelocity);
         public const string IsGrounded = nameof(IsGrounded);
         public const string Jump = nameof(Jump);
+        public const string Death = nameof(Death);
     }
 }

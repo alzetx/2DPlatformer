@@ -52,13 +52,8 @@ public class PlayerSpawner : MonoBehaviour, IGameStartListener, IGamePauseListen
 
     private void SpawnPlayer()
     {
-        CleanUp();
         StopCountdown();
-
-        if (_player != null)
-        {
-            DestroyPlayer();
-        }
+        CleanRefs();
 
         _player = _container.InstantiatePrefabForComponent<Character>(
             _prefab,
@@ -76,15 +71,7 @@ public class PlayerSpawner : MonoBehaviour, IGameStartListener, IGamePauseListen
     {
         _healthData.OnDeathEvent -= OnPlayerDied;
 
-        Destroy(_player.gameObject);
-        CleanUp();
-
         StartCountdown();
-    }
-    private void CleanUp()
-    {
-        _player = null;
-        _healthData = null;
     }
 
     private void StartCountdown()
@@ -118,17 +105,29 @@ public class PlayerSpawner : MonoBehaviour, IGameStartListener, IGamePauseListen
         }
     }
 
-    [Button]
-    private void DestroyPlayer()
+    private void OnCountdownEnded()
     {
-        _healthData.OnDeathEvent -= DestroyPlayer;
-        Destroy(_player.gameObject); _countdown.Reset();
+        if (_player != null)
+            Destroy(_player.gameObject);
+
+        CleanRefs();
+
+        SpawnPlayer();
+    }
+
+    private void CleanRefs()
+    {
         _player = null;
         _healthData = null;
     }
 
-    private void OnCountdownEnded()
+    [Button]
+    private void DestroyPlayer()
     {
-        SpawnPlayer();
+        if (_player != null)
+            Destroy(_player.gameObject);
+
+        CleanRefs();
+        StopCountdown();
     }
 }
