@@ -1,8 +1,7 @@
-using Atomic.Elements;
-using Atomic.Extensions;
 using Atomic.Objects;
+using Zenject;
 
-public class CharacterInputBinder :  IGameStartListener, IGamePauseListener, IGameResumeListener
+public class CharacterInputBinder :  IInitializable, IGamePauseListener, IGameResumeListener
 {
     private readonly AtomicObject _character;
     private readonly IInput _input;
@@ -16,13 +15,11 @@ public class CharacterInputBinder :  IGameStartListener, IGamePauseListener, IGa
         _input = input;
     }
 
-    void IGameStartListener.OnStartGame()
+    void IInitializable.Initialize()
     {
         LinksInput();
         Bind(true);
     }
-
-   
 
     void IGamePauseListener.OnPauseGame()
     {

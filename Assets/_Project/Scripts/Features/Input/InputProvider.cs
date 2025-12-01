@@ -2,7 +2,7 @@ using System;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class InputProvider : IInitializable, IGameStartListener, IGamePauseListener, IGameResumeListener, IDisposable, IInput
+public class InputProvider : IInitializable, IGamePauseListener, IGameResumeListener, IDisposable, IInput
 {
     private Controls _input;
     private float _moveDirection;
@@ -11,8 +11,9 @@ public class InputProvider : IInitializable, IGameStartListener, IGamePauseListe
     public event Action<float> OnMoveEvent;
     public event Action OnJumpEvent;
 
-    public void OnStartGame()
+    void IInitializable.Initialize()
     {
+        _input = new();
         Bind(true);
     }
 
@@ -59,8 +60,5 @@ public class InputProvider : IInitializable, IGameStartListener, IGamePauseListe
     {
         OnJumpEvent?.Invoke();
     }
-    void IInitializable.Initialize()
-    {
-        _input = new();
-    }
+    
 }

@@ -2,7 +2,7 @@ using Atomic.Objects;
 using UnityEngine;
 using Zenject;
 
-public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, IGamePauseListener, IGameResumeListener, IGameTickable
+public class Character : AtomicObject, IInitializable, IGameFixedTickable, IGamePauseListener, IGameResumeListener, IGameTickable
 {
     [SerializeField, Section]
     private CharacterCore _core;
@@ -14,12 +14,12 @@ public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, I
     {
         _view.Construct(view);
     }
-    public void OnStartGame()
+    void IInitializable.Initialize()
     {
         _core.OnStartGame();
         _view.OnStartGame(_core);
         Enable();
-    }
+    } 
 
     void IGameFixedTickable.FixedTick(float deltaTime)
     {
@@ -57,5 +57,4 @@ public class Character : AtomicObject, IGameStartListener, IGameFixedTickable, I
         _view.OnDisable();
     }
 
-    
 }

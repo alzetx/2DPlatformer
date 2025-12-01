@@ -1186,7 +1186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e38ac19cef1f0445b8eb771df7a3d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 225515250}
   _xSpeed: 0.05
 --- !u!1 &329890771
 GameObject:
@@ -1532,6 +1531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 735511176}
+  - component: {fileID: 735511177}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1556,6 +1556,19 @@ Transform:
   - {fileID: 889222588}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &735511177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735511175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d6b64fd3231154b97857b40b37b1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemaCamera: {fileID: 889222590}
 --- !u!1 &761958824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37df4f2920ef2f34c9e36da741c31707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraController: {fileID: 735511177}
   _playerSpawner: {fileID: 2103473483}
 --- !u!114 &761958826
 MonoBehaviour:
@@ -3484,6 +3498,7 @@ MonoBehaviour:
   _prefab: {fileID: 1759882179337192674, guid: f2379e60e2714d24194ea98b9f7cb974, type: 3}
   _pointSpawn: {fileID: 1785371829}
   _parent: {fileID: 648428696}
+  _respawnDelay: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
