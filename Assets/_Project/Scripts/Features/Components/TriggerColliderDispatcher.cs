@@ -4,26 +4,25 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class TriggerColliderDispatcher : MonoBehaviour
+public class TriggerColliderDispatcher : AtomicObject
 {
     [SerializeField]
     private Collider2D _collider;
 
-    public event Action<Collider2D> TriggerEnteredEvent;
-    public event Action<Collider2D> TriggerExitedEvent;
-
-    private void Start()
+    OnTriggerCollisionMechanics onTriggerCollisionMechanics;
+    public void Initialization(IAtomicAction<bool, Collider2D> onTriggerCollision)
     {
         _collider.isTrigger = true;
+        onTriggerCollisionMechanics = new(onTriggerCollision);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TriggerEnteredEvent?.Invoke(collision);
+        onTriggerCollisionMechanics?.Enter(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        TriggerExitedEvent?.Invoke(collision);
+        onTriggerCollisionMechanics?.Exit(collision);
     }
 }
