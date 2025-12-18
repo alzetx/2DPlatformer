@@ -44,6 +44,9 @@ TagManager:
   - name: Environment
     uniqueID: 4091770013
     locked: 0
+  - name: Obstacle
+    uniqueID: 2109054261
+    locked: 0
   - name: Character
     uniqueID: 1855450399
     locked: 0
