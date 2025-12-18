@@ -10,7 +10,7 @@ public class RestoreHealthAction : IAtomicAction<IHealingItem>
 
     public void Invoke(IHealingItem iHealingItem)
     {
-        if (iHealingItem.HealingPoints.Value <= 0 || _healthData.IsHealthFull)
+        if (iHealingItem.HealingPoints.Value <= 0 || _healthData.IsHealthFull.Value)
         {
             return;
         }

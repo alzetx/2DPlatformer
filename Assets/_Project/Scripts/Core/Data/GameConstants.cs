@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
 public static class GameConstants
 {
     public static class Variables
@@ -11,6 +9,7 @@ public static class GameConstants
     public static class Actions
     {
         public const string Jump = nameof(Jump);
+        public const string Kill = nameof(Kill);
     }
 
     public static class SceneNames
@@ -25,5 +24,10 @@ public static class GameConstants
         public const string IsGrounded = nameof(IsGrounded);
         public const string Jump = nameof(Jump);
         public const string Death = nameof(Death);
+    }
+
+    public static class ObjectTypes
+    {
+        public const string Damageable = nameof(Damageable);
     }
 }

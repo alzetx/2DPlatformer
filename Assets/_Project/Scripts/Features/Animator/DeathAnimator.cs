@@ -15,12 +15,12 @@ public class DeathAnimator
 
     public void Enable()
     {
-        _healthData.OnDeathEvent += OnDeath;
+        _healthData.OnDeathEvent.Subscribe(OnDeath);
     }
 
     public void Disable()
     {
-        _healthData.OnDeathEvent -= OnDeath;
+        _healthData.OnDeathEvent.Unsubscribe(OnDeath);
     }
     private void OnDeath()
     {

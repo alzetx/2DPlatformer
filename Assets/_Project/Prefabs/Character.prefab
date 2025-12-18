@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1615965649196353864}
   - component: {fileID: 299747114800743187}
   - component: {fileID: 5960507669809297010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 2110707964052141393}
   - component: {fileID: 6318377105216049770}
   - component: {fileID: 698806578923705467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 2294052819175986158}
   - component: {fileID: 8604403809819167228}
   - component: {fileID: 3978838611671212086}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,15 +331,15 @@ MonoBehaviour:
     moveComponent:
       xDirection:
         value: 0
-      _rigidbody: {fileID: 5208580116111666861}
-      _enabled:
+      Behaviour:
         value: 1
+      _rigidbody: {fileID: 5208580116111666861}
       _isMoving:
         value: 0
       _moveSpeed:
         value: 150
     jumpComponent:
-      _enabled:
+      Behaviour:
         value: 1
       _impactForce:
         value: 5
@@ -354,13 +354,19 @@ MonoBehaviour:
         value: 1
     healthComponent:
       HealthData:
-        maxHP: 5
-        currentHP: 5
+        _maxHP:
+          value: 5
+        _currentHP:
+          value: 5
+        _isAlive:
+          value: 1
+        _isHealthFull:
+          value: 1
     _rotationComponent:
+      Behaviour:
+        value: 1
       _transfrom: {fileID: 2110707964052141393}
       _facingRight:
-        value: 1
-      _enabled:
         value: 1
   _view:
     _animator: {fileID: 698806578923705467}

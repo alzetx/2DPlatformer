@@ -62,14 +62,14 @@ public class PlayerSpawner : MonoBehaviour, IGameStartListener, IGamePauseListen
             _parent);
 
         _healthData = _player.Get<HealthData>(GameConstants.Variables.Health);
-        _healthData.OnDeathEvent += OnPlayerDied;
+        _healthData.OnDeathEvent.Subscribe(OnPlayerDied);
 
         OnPlayerSpawn?.Invoke(_player);
     }
 
     private void OnPlayerDied()
     {
-        _healthData.OnDeathEvent -= OnPlayerDied;
+        _healthData.OnDeathEvent.Unsubscribe(OnPlayerDied);
 
         StartCountdown();
     }

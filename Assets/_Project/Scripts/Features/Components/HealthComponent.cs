@@ -1,8 +1,9 @@
 using Atomic.Elements;
 using Atomic.Objects;
 using System;
+using UnityEngine;
 
-[Serializable]
+[Serializable, Is(GameConstants.ObjectTypes.Damageable)]
 public class HealthComponent
 {
     [Get(GameConstants.Variables.Health)]
@@ -10,15 +11,23 @@ public class HealthComponent
     private AtomicFunction<bool> _isAlive = new();
     public RestoreHealthAction RestoreHealthAction;
     public AtomicEvent<int> TakeDamageEvent;
+    public AtomicEvent OnDeath;
+
+    [SerializeField, Get(GameConstants.Actions.Kill)]
+    public IAtomicAction Kill => _killAction;
 
     private TakeDamageMechanics _takeDamageMechanics;
+    [SerializeField]
+    private KillAction _killAction;
 
     public IAtomicValue<bool> IsAlive => _isAlive;
     public void Initialize()
     {
-        _isAlive.Compose(() => HealthData.currentHP > 0);
+        HealthData.Initialize();
+        _isAlive.Compose(() => HealthData.IsAlive.Value);
         _takeDamageMechanics = new(TakeDamageEvent, HealthData);
         RestoreHealthAction = new(HealthData);
+        _killAction.Initialize(HealthData.IsAlive, HealthData.KillAction, OnDeath);
 
     }
 
@@ -35,5 +44,6 @@ public class HealthComponent
     public void Dispose()
     {
         TakeDamageEvent?.Dispose();
+        HealthData?.Dispose();
     }
 }

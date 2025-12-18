@@ -8,7 +8,7 @@ using UnityEngine;
 public class JumpComponent
 {
     [SerializeField, Title("Behaviour")]
-    private AtomicVariable<bool> _enabled;
+    public AtomicVariable<bool> Behaviour;
 
     [Space, Title("Settings")]
     [SerializeField]
@@ -48,8 +48,8 @@ public class JumpComponent
         _layerFilter = new(_interactionMasks);
         _updateObstaclesAction = new(_layerFilter, _contactsObstacles);
 
-        _groundedCondition = new(_enabled, _contactsObstacles);
-        _groundCollider.Initialization(_updateObstaclesAction);
+        _groundedCondition = new(Behaviour, _contactsObstacles);
+        _groundCollider.Initialize(_updateObstaclesAction);
 
         _addForceAction = new(_rigidbody, _force, _impactForce);
         _jumpAction.Initialize(_groundedCondition, _addForceAction, onJump);
@@ -63,6 +63,11 @@ public class JumpComponent
     public void Disable()
     {
         _groundedCondition.Disable();
+    }
+
+    public void Dispose()
+    {
+        Behaviour.Dispose();
         _isGrounded.Dispose();
         onJump.Dispose();
     }

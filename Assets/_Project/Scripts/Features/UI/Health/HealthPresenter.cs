@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public class HealthPresenter
 {
     private readonly HealthView _view;
@@ -13,8 +10,8 @@ public class HealthPresenter
     }
     public void Initialize()
     {
-        _view.SetMaxValue(_health.maxHP);
-        _view.SetCurrentValue(_health.currentHP);
+        _view.SetMaxValue(_health.MaxHP.Value);
+        _view.SetCurrentValue(_health.CurrentHP.Value);
     }
     public void Enable()
     {
@@ -30,11 +27,11 @@ public class HealthPresenter
     {
         if (bind)
         {
-            _health.OnHealthChanged += OnHealthChanged;
+            _health.OnHealthChanged.Subscribe(OnHealthChanged);
         }
         else
         {
-            _health.OnHealthChanged -= OnHealthChanged;
+            _health.OnHealthChanged.Unsubscribe(OnHealthChanged);
         }
     }
 

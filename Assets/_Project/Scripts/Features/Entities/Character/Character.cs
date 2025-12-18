@@ -2,7 +2,7 @@ using Atomic.Objects;
 using UnityEngine;
 using Zenject;
 
-public class Character : AtomicObject, IInitializable, IGameFixedTickable, IGamePauseListener, IGameResumeListener, IGameTickable
+public sealed class Character : AtomicObject, IInitializable, IGameFixedTickable, IGamePauseListener, IGameResumeListener, IGameTickable
 {
     [SerializeField, Section]
     private CharacterCore _core;
@@ -30,11 +30,6 @@ public class Character : AtomicObject, IInitializable, IGameFixedTickable, IGame
         _view.Tick(deltaTime);
     }
 
-    private void OnDestroy()
-    {
-        _core.OnDestroy();
-    }
-
     void IGamePauseListener.OnPauseGame()
     {
         Disable();
@@ -56,5 +51,8 @@ public class Character : AtomicObject, IInitializable, IGameFixedTickable, IGame
         _core.OnDisable();
         _view.OnDisable();
     }
-
+    private void OnDestroy()
+    {
+        _core.OnDestroy();
+    }
 }

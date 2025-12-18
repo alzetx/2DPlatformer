@@ -10,7 +10,7 @@ public class TriggerColliderDispatcher : AtomicObject
     private Collider2D _collider;
 
     OnTriggerCollisionMechanics onTriggerCollisionMechanics;
-    public void Initialization(IAtomicAction<bool, Collider2D> onTriggerCollision)
+    public void Initialize(IAtomicAction<bool, Collider2D> onTriggerCollision)
     {
         _collider.isTrigger = true;
         onTriggerCollisionMechanics = new(onTriggerCollision);

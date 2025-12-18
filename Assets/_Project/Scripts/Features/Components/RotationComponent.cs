@@ -7,11 +7,11 @@ using UnityEngine;
 public class RotationComponent
 {
     [SerializeField]
+    public AtomicVariable<bool> Behaviour;
+    [SerializeField]
     private Transform _transfrom;
     [SerializeField]
     private AtomicVariable<bool> _facingRight;
-    [SerializeField]
-    private AtomicVariable<bool> _enabled;
 
     private FacingRightCondition _facingRightCondition;
     private RotationMechanics _rotationMechanics;
@@ -20,7 +20,7 @@ public class RotationComponent
     public void Initialize(IAtomicObservable<float> moveXDirectionObservable)
     {
         _facingRightCondition = new(_transfrom, _facingRight);
-        _rotationMechanics = new(_enabled, moveXDirectionObservable, _transfrom, _facingRightCondition);
+        _rotationMechanics = new(Behaviour, moveXDirectionObservable, _transfrom, _facingRightCondition);
         _rotationMechanics.Initialize();
     }
 
