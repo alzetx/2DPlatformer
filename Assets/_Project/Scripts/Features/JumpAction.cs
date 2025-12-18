@@ -1,17 +1,18 @@
 using Atomic.Elements;
+using Atomic.Extensions;
 using Sirenix.OdinInspector;
 using System;
 
 [Serializable]
 public class JumpAction : IAtomicAction
 {
-    private IAtomicValue<bool> _condition;
+    private IAtomicValue<bool>[] _conditions;
     private IAtomicAction _addForceJumpAction;
     private IAtomicEvent _onJump;
 
-    public void Initialize(IAtomicValue<bool> condition, IAtomicAction addForceJumpAction, IAtomicEvent onJump)
+    public void Initialize(IAtomicAction addForceJumpAction, IAtomicEvent onJump,  params IAtomicValue<bool>[] conditions)
     {
-        _condition = condition;
+        _conditions = conditions;
         _addForceJumpAction = addForceJumpAction;
         _onJump = onJump;
     }
@@ -19,10 +20,15 @@ public class JumpAction : IAtomicAction
     [Button]
     public void Invoke()
     {
-        if (!_condition.Value)
+        for (int i = 0; i < _conditions.Length; i++)
         {
-            return;
+            if (!_conditions[i].Value)
+            {
+                return;
+            }
         }
+
+
         _addForceJumpAction.Invoke();
         _onJump.Invoke();
     }

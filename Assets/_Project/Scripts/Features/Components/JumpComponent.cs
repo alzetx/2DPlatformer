@@ -49,11 +49,11 @@ public class JumpComponent
         _layerFilter = new(_interactionMasks);
         _updateObstaclesAction = new(_layerFilter, _contactsObstacles);
 
-        _groundedCondition = new(Behaviour, _contactsObstacles);
+        _groundedCondition = new(_contactsObstacles, _isGrounded);
         _groundCollider.Initialize(_updateObstaclesAction);
 
         _addForceAction = new(_rigidbody, _force, _impactForce);
-        _jumpAction.Initialize(_groundedCondition, _addForceAction, onJump);
+        _jumpAction.Initialize(_addForceAction, onJump, _groundedCondition, Behaviour);
     }
 
     public void Enable()

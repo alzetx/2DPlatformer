@@ -4,6 +4,9 @@ using UnityEngine;
 public class CharacterConfig : ScriptableObject
 {
     [field: SerializeField]
+    public int MaxCountJump { get; private set; } = 2;
+
+    [field: SerializeField]
     public float MoveSpeed { get; private set; } = 150f;
     [field: SerializeField]
     public float JumpForce { get; private set; } = 5f;

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 public class GroundedCondition<T> : IAtomicFunction<bool>
 {
-    private IAtomicValue<bool> _enableBehaviour;
-    private IAtomicObservable<IReadOnlyList<T>> _obstacles;
-    private bool _enable;
+    private readonly IAtomicObservable<IReadOnlyList<T>> _obstacles;
+    private readonly IAtomicVariable<bool> _isGrounded;
 
-    public GroundedCondition(IAtomicValue<bool> behaviour, IAtomicObservable<IReadOnlyList<T>> obstacles)
+    public GroundedCondition(IAtomicObservable<IReadOnlyList<T>> obstacles, IAtomicVariable<bool> isGrouned)
     {
-        _enableBehaviour = behaviour;
         _obstacles = obstacles;
+        _isGrounded = isGrouned;
     }
 
     public void Enable()
@@ -25,11 +24,11 @@ public class GroundedCondition<T> : IAtomicFunction<bool>
 
     private void OnObstaclesChanged(IReadOnlyList<T> list)
     {
-        _enable = list.Count > 0;
+        _isGrounded.Value = list.Count > 0;
     }
 
     public bool Invoke()
     {
-        return _enableBehaviour.Value && _enable;
+        return  _isGrounded.Value;
     }
 }

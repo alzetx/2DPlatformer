@@ -11,7 +11,7 @@ public class CharacterCore
     [Section]
     public MoveXComponent moveComponent;
     [Section]
-    public JumpComponent jumpComponent;
+    public ExtraJumpComponent jumpComponent;
     [Section]
     public HealthComponent healthComponent;
 
