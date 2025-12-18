@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _core:
+    _config: {fileID: 11400000, guid: a6eabed2f3bc88242a65f8af78f58fa3, type: 2}
     moveComponent:
       xDirection:
         value: 0

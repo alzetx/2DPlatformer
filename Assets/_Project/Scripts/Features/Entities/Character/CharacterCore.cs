@@ -5,6 +5,9 @@ using UnityEngine;
 [Serializable]
 public class CharacterCore
 {
+    [SerializeField]
+    private CharacterConfig _config;
+
     [Section]
     public MoveXComponent moveComponent;
     [Section]
@@ -20,13 +23,18 @@ public class CharacterCore
 
     public void OnStartGame()
     {
-        _mechanicsController = new(healthComponent.HealthData.IsAliveObservable, moveComponent.Behaviour, jumpComponent.Behaviour, _rotationComponent.Behaviour);
-        moveComponent.Initialize();
+        _mechanicsController = 
+            new(healthComponent.HealthData.IsAliveObservable,
+            moveComponent.Behaviour, jumpComponent.Behaviour,
+            _rotationComponent.Behaviour);
+
+
+        moveComponent.Initialize(_config);
         _rotationComponent.Initialize(moveComponent.xDirection);
-        jumpComponent.Initialize();
-        healthComponent.Initialize();
-        jumpComponent.Enable();
+        jumpComponent.Initialize(_config);
+        healthComponent.Initialize(_config);
     }
+
 
     public void OnEnable()
     {

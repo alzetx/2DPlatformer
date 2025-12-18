@@ -27,8 +27,9 @@ public class MoveXComponent
     public Rigidbody2D Rigidbody2D => _rigidbody;
 
 
-    public void Initialize()
+    public void Initialize(CharacterConfig config)
     {
+        _moveSpeed.Value = config.MoveSpeed;
         _moveXMechanics = new(Behaviour, xDirection, _moveSpeed, _rigidbody, _isMoving);
     }
 

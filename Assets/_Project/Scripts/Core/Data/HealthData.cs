@@ -7,7 +7,7 @@ using UnityEngine;
 public class HealthData
 {
     [SerializeField]
-    private AtomicValue<int> _maxHP;
+    private AtomicVariable<int> _maxHP;
     [SerializeField]
     private AtomicVariable<int> _currentHP;
     [SerializeField]
@@ -26,8 +26,9 @@ public class HealthData
     public IAtomicEvent OnDeathEvent => _onDeathEvent;
     public IAtomicAction KillAction => _killAction;
 
-    public void Initialize()
+    public void Initialize(int MaxHP)
     {
+        _maxHP.Value = MaxHP;
         _killAction = new(Kill);
         UpdateHealthFull();
         UpdateIsAlive();
@@ -40,6 +41,7 @@ public class HealthData
         _currentHP.Dispose();
         _isAlive.Dispose();
         _isHealthFull.Dispose();
+        _maxHP.Dispose();
     }
     private void SetHealth(int newValue)
     {

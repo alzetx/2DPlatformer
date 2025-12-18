@@ -43,8 +43,9 @@ public class JumpComponent
     private LayerMaskFilter _layerFilter;
     private GroundedCondition<GameObject> _groundedCondition;
 
-    public void Initialize()
+    public void Initialize(CharacterConfig config)
     {
+        _impactForce.Value = config.JumpForce;
         _layerFilter = new(_interactionMasks);
         _updateObstaclesAction = new(_layerFilter, _contactsObstacles);
 
