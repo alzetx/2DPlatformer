@@ -20,7 +20,7 @@ public class ProjectContextInstaller : MonoInstaller
     {
         Container.Bind<SceneLoader>().AsSingle();
         Container.Bind<GameFinisher>().AsSingle();
-
+        Container.Bind<IStorageService>().To<JsonToFileStorageService>().AsSingle();
         BindAudio();
     }
 
