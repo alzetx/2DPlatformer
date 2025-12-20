@@ -15,6 +15,8 @@ public class CharacterCore
     [Section]
     public HealthComponent healthComponent;
 
+    public CoinComponent coinComponent;
+
     [SerializeField]
     private RotationComponent _rotationComponent;
 
@@ -24,7 +26,8 @@ public class CharacterCore
     public void OnStartGame()
     {
         _mechanicsController = 
-            new(healthComponent.HealthData.IsAliveObservable,
+            new(healthComponent.HealthData.IsAlive,
+            healthComponent.HealthData.IsAliveObservable,
             moveComponent.Behaviour, jumpComponent.Behaviour,
             _rotationComponent.Behaviour);
 
@@ -33,6 +36,7 @@ public class CharacterCore
         _rotationComponent.Initialize(moveComponent.xDirection);
         jumpComponent.Initialize(_config);
         healthComponent.Initialize(_config);
+        coinComponent.Initialize();
     }
 
 

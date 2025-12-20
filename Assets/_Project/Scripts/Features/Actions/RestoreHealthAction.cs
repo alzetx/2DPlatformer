@@ -14,7 +14,7 @@ public class RestoreHealthAction : IAtomicAction<IHealingItem>
         {
             return;
         }
-        _healthData.RestoreHealth(iHealingItem.HealingPoints.Value);
+        _healthData.AddValue(iHealingItem.HealingPoints.Value);
         iHealingItem.PickUpAction?.Invoke();
     }
 }

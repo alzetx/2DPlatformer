@@ -10,9 +10,9 @@ public sealed class Character : AtomicObject, IInitializable, IGameFixedTickable
     private CharacterView _view;
 
     [Inject]
-    private void Construct(HealthView view)
+    private void Construct(SliderCurrencyView sliderHP, HPView textHP, CoinView coinView)
     {
-        _view.Construct(view);
+        _view.Construct(sliderHP, textHP, coinView);
     }
     void IInitializable.Initialize()
     {

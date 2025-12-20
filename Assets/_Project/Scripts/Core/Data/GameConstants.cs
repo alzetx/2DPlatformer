@@ -29,5 +29,7 @@ public static class GameConstants
     public static class ObjectTypes
     {
         public const string Damageable = nameof(Damageable);
+        public const string PickUp = nameof(PickUp);
+        public const string Coin = nameof(Coin);
     }
 }
