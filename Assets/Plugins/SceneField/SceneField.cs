@@ -16,10 +16,6 @@ public class SceneField
 
     public static implicit operator string(SceneField field)
     {
-#if UNITY_EDITOR
-        return field.ScenePath;
-#else
-        return field._sceneGuid; 
-#endif
+        return field._sceneGuid;
     }
 }

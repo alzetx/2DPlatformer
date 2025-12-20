@@ -534,8 +534,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollSpeed: 0.1
-  XDirection: 1
-  YDirection: 1
+  _xDirection: 1
+  _yDirection: 1
   _rawImage: {fileID: 7207225728344142960}
 --- !u!1 &2066832513339113240
 GameObject:

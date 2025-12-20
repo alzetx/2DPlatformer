@@ -511,8 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextScene:
-    _sceneAsset: {fileID: 102900000, guid: 0427b16e9e7f21b4a8639d8b8ba36e28, type: 3}
-    _sceneName: GameScene
+    _sceneGuid: 0427b16e9e7f21b4a8639d8b8ba36e28
   _ui: {fileID: 867477191328544545}
 --- !u!114 &1904587899624983079
 MonoBehaviour:
