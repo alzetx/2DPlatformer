@@ -3,10 +3,12 @@ using Atomic.Elements;
 public class MechanicsController
 {
     private readonly IAtomicObservable<bool> _isAlive;
+    private readonly IAtomicValue<bool> _isAliveValue;
     private readonly IAtomicVariable<bool>[] _mechanicsBehaviour;
 
-    public MechanicsController(IAtomicObservable<bool> isAlive,params IAtomicVariable<bool>[] mechanicsBehaviour)
+    public MechanicsController(IAtomicValue<bool> isAliveValue, IAtomicObservable<bool> isAlive,params IAtomicVariable<bool>[] mechanicsBehaviour)
     {
+        _isAliveValue = isAliveValue;
         _isAlive = isAlive;
         _mechanicsBehaviour = mechanicsBehaviour;
     }
@@ -14,6 +16,7 @@ public class MechanicsController
     public void Enable()
     {
         _isAlive.Subscribe(OnValueChanged);
+        OnValueChanged(_isAliveValue.Value);
     }
     public void Disable()
     {

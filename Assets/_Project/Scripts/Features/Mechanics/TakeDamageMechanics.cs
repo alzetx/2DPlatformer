@@ -25,6 +25,6 @@ public class TakeDamageMechanics
     private void OnTakeDamage(int damage)
     {
         damage = math.clamp(damage, 0, int.MaxValue);
-        _hitPoints.SetDamage(damage);
+        _hitPoints.SpendValue(damage);
     }
 }

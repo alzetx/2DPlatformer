@@ -47,6 +47,9 @@ TagManager:
   - name: Obstacle
     uniqueID: 2109054261
     locked: 0
+  - name: Item
+    uniqueID: 1927164185
+    locked: 0
   - name: Character
     uniqueID: 1855450399
     locked: 0

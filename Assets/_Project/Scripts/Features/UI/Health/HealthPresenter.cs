@@ -1,17 +1,23 @@
 public class HealthPresenter
 {
-    private readonly HealthView _view;
+    private readonly SliderCurrencyView _slider;
+    private readonly HPView _text;
     private readonly HealthData _health;
 
-    public HealthPresenter(HealthView view, HealthData health)
+    public HealthPresenter(SliderCurrencyView slider, HPView text, HealthData health)
     {
-        _view = view;
+        _slider = slider;
+        _text = text;
         _health = health;
     }
     public void Initialize()
     {
-        _view.SetMaxValue(_health.MaxHP.Value);
-        _view.SetCurrentValue(_health.CurrentHP.Value);
+        _slider.SetMaxValue(_health.Max.Value);
+        _slider.SetCurrentValue(_health.Min.Value);
+        _text.SetupCurrency(_health.Current.Value.ToString());
+
+        _slider.ChangeValue(_health.Current.Value);
+        _text.AddCurrency(0, _health.Current.Value);
     }
     public void Enable()
     {
@@ -27,16 +33,30 @@ public class HealthPresenter
     {
         if (bind)
         {
-            _health.OnHealthChanged.Subscribe(OnHealthChanged);
+            _health.OnValueChangedEvent +=OnHealthChanged;
         }
         else
         {
-            _health.OnHealthChanged.Unsubscribe(OnHealthChanged);
+            _health.OnValueChangedEvent -=OnHealthChanged;
         }
     }
 
-    private void OnHealthChanged(int currentHP)
+    private void OnHealthChanged(int previous, int current)
     {
-        _view.SetCurrentValue(currentHP);
+        if (previous == current)
+        {
+            return;
+        }
+
+        _slider.ChangeValue(current);
+        if (previous < current)
+        {
+            _text.AddCurrency(previous, current- previous);
+        }
+        else
+        {
+            _text.RemoveCurrency(previous.ToString());
+        }
+
     }
 }

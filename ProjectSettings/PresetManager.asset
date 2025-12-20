@@ -4,4 +4,15 @@
 PresetManager:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_DefaultPresets: {}
+  m_DefaultPresets:
+  - first:
+      m_NativeTypeID: 1006
+      m_ManagedTypePPtr: {fileID: 0}
+      m_ManagedTypeFallback: 
+    second:
+    - m_Preset: {fileID: 2655988077585873504, guid: ed34ca173d763ce45b1af6d771af17cb, type: 2}
+      m_Filter: 
+      m_Disabled: 0
+    - m_Preset: {fileID: 2655988077585873504, guid: 73fb16228b8589c4a8bd1ab7ca2d0bab, type: 2}
+      m_Filter: glob:"Assets/_Project/Visual/Sprites/UI*"
+      m_Disabled: 0
